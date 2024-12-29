@@ -4,11 +4,13 @@ def print_succ(*args, **kwargs):
     """
     print("[+]", *args, **kwargs)
 
+
 def print_fail(*args, **kwargs):
     """
     Prints a failure message prefixed with '[-]', behaves like print.
     """
     print("[-]", *args, **kwargs)
+
 
 def print_status(*args, **kwargs):
     """

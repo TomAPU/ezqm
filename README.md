@@ -36,8 +36,10 @@ After executing, you will find a `ezqmlocal.json` file under your folder with co
     "bzImage": "/xxxx/linux-upstream/arch/x86/boot/bzImage",
     "gdbport": 11451,
     "qemuport": 19198,
+    "sshport": 8964,
     "tmpfile": "/tmp/bQZv746sBv",
-    "kernelparam": "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1"
+    "kernelparam": "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1",
+    "additionalcmd": []
 }
 ```
 Then, when you switch to that directory and execute EZQM related command, the corresponding `ezqmlocal.json` will be used as the local configuration file and can be configured by following command:

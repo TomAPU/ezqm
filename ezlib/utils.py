@@ -1,5 +1,7 @@
-import random 
 import os 
+import random 
+import shutil
+from typing import List
 
 def random_num(low:int, high:int)->int:
     '''
@@ -36,3 +38,67 @@ def rand_tmp_file()->str:
     Generate a random temporary file name
     '''
     return f'/tmp/{rand_string(10)}'
+
+
+def exec_command(command: List[str]) -> None:
+    """
+    Executes a command, replacing the current process.
+
+    Args:
+        command (List[str]): A list of strings where the first element is the command
+                             and the rest are its arguments.
+    """
+    if not isinstance(command, list):
+        raise ValueError("Command must be provided as a list of strings.")
+    
+    # Validate the command using shutil.which
+    if shutil.which(command[0]) is None:
+        raise FileNotFoundError(f"Command '{command[0]}' not found.")
+    
+    # Replace the current process
+    os.execvp(command[0], command)
+
+def generate_qemu_command(gconf: dict, lconf: dict):
+    command = []
+    command.extend(
+        [
+            "qemu-system-x86_64",
+            "-m",
+            "2048",
+            "-gdb",
+            f"tcp::{lconf['gdbport']}",
+            f"-monitor",
+            f"tcp::{lconf['qemuport']},server,nowait",
+            "-smp",
+            "4",
+            "-display",
+            "none",
+        ]
+    )
+    command.extend(["-chardev", f"stdio,id=char0,logfile={lconf['tmpfile']},signal=on"])
+    command.extend(
+        [
+            "-serial",
+            "chardev:char0",
+            "-no-reboot",
+            "-device",
+            "virtio-rng-pci",
+            "-enable-kvm",
+            "-cpu",
+            "host,migratable=on",
+            "-device",
+            "e1000,netdev=net0",
+            "-nographic",
+            "-snapshot",
+        ]
+    )
+    command.extend(
+        [
+            "-netdev",
+            f"user,id=net0,restrict=on,hostfwd=tcp:127.0.0.1:{lconf['sshport']}-:22",
+        ]
+    )
+    command.extend(["-drive", f"file={gconf['diskimage']}"])
+    command.extend(["-kernel", lconf["bzImage"], "-append", lconf["kernelparam"]])
+    command.extend(lconf["additionalcmd"])
+    return command

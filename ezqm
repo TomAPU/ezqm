@@ -1,5 +1,37 @@
 #!/usr/bin/python3
 import argparse
+from ezlib.settings import (
+    check_local_settings,
+    check_global_settings,
+    read_global_settings,
+    read_local_settings,
+)
+from ezlib.utils import exec_command, generate_qemu_command
 
-if __name__ == '__main__':
-    print("Hello, World!")
+
+
+def main(gconf: dict, lconf: dict):
+    parser = argparse.ArgumentParser(description="ezqm - Simplified QEMU launching.")
+
+    parser.add_argument(
+        "-b",
+        "--build-memory-snapshot",
+        action="store_true",
+        help="Build a memory snapshot to facilitate QEMU.",
+    )
+
+    args = parser.parse_args()
+
+    if args.build_memory_snapshot:
+        print("Build memory snapshot feature is not yet implemented.")
+    else:
+        qemu_cmd = generate_qemu_command(gconf, lconf)
+        exec_command(qemu_cmd)
+
+
+if __name__ == "__main__":
+    check_local_settings()
+    check_global_settings()
+    gconf = read_global_settings()
+    lconf = read_local_settings()
+    main(gconf, lconf)
