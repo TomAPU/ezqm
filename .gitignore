@@ -32,3 +32,6 @@ __pycache__/
 # System files
 .DS_Store
 Thumbs.db
+
+# ezqm file 
+*.json
