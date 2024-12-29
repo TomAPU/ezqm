@@ -76,11 +76,13 @@ LOCAL_SCHEMA = {
     "kernelparam": {"required": True, "type": str},
     "tmpfile": {"required": True, "type": str},
     "additionalcmd": {"required": True, "type": list, "list_type": str},
+    "snapshot_file": {"required": False, "path_type": "file"}
 }
 
 GLOBAL_SCHEMA = {
     "diskimage": {"required": True, "path_type": "file"},
     "sshkey": {"required": True, "path_type": "file"},
+    "snapshotfolder": {"required": False, "path_type": "directory"}
 }
 
 

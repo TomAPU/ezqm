@@ -47,3 +47,27 @@ Then, when you switch to that directory and execute EZQM related command, the co
 ```bash
 ezcf -l -u key val
 ```
+# Start QEMU 
+After setting up, simply use the following command to launch the QEMU
+```bash
+ezqm
+``` 
+
+# Using memory snapshot to skip QEMU booting!
+Taking a snapshot after QEMU booting and restore the memory snapshot everytime we start QEMU to make things faster! We don't have to wait for QEMU boot anymore!
+First we need a folder to store QEMU memorysnapshot. Ideally, creating a ramfs to reduce reading time by the following command:
+
+```bash
+mount ramfs -t ramfs <path/to/your/folder>
+```
+
+Then we use ezcf to configure this folder globally. 
+
+```bash
+ezcf -g -u snapshotfolder <path/to/your/folder>
+```
+
+Create snapshot and set booting parameter with the following command (Currently, only works for diskimage created by Syzkaller's create-image.sh)
+```bash
+ezqm -b
+```
