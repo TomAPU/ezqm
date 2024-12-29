@@ -3,8 +3,6 @@ import os
 import argparse
 import pexpect
 from ezlib.settings import (
-    check_local_settings,
-    check_global_settings,
     read_global_settings,
     write_local_settings,
     read_local_settings,
@@ -17,7 +15,10 @@ from ezlib.utils import (
     start_qemu_and_login,
     execute_qemu_command,
     rand_string,
+    confguard
 )
+
+
 
 
 def main(gconf: dict, lconf: dict):
@@ -31,6 +32,7 @@ def main(gconf: dict, lconf: dict):
     )
 
     args = parser.parse_args()
+    confguard(parser)
 
     if args.build_memory_snapshot:
         # Read snapshotfolder from global settings
@@ -78,8 +80,6 @@ def main(gconf: dict, lconf: dict):
 
 
 if __name__ == "__main__":
-    check_local_settings()
-    check_global_settings()
     gconf = read_global_settings()
     lconf = read_local_settings()
     main(gconf, lconf)

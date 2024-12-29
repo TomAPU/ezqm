@@ -6,7 +6,8 @@ from .printing import print_status, print_succ, print_fail
 from typing import List
 import shlex
 import socket
-
+from argparse import ArgumentParser
+from .settings import check_global_settings,check_local_settings
 
 def random_num(low: int, high: int) -> int:
     """
@@ -53,6 +54,14 @@ def rand_tmp_file() -> str:
     """
     return f"/tmp/{rand_string(10)}"
 
+
+def confguard(parser:ArgumentParser) -> None:
+    try:
+        check_global_settings()
+        check_local_settings()
+    except Exception as e:
+        parser.print_help()
+        exit(1)
 
 def exec_command(command: List[str]) -> None:
     """

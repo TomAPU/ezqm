@@ -53,7 +53,7 @@ After setting up, simply use the following command to launch the QEMU
 ezqm
 ``` 
 
-# Using memory snapshot to skip QEMU booting!
+# Using memory snapshot to skip QEMU booting (optionl)!
 Taking a snapshot after QEMU booting and restore the memory snapshot everytime we start QEMU to make things faster! We don't have to wait for QEMU boot anymore!
 First we need a folder to store QEMU memorysnapshot. Ideally, creating a ramfs to reduce reading time by the following command:
 
@@ -71,3 +71,33 @@ Create snapshot and set booting parameter with the following command (Currently,
 ```bash
 ezqm -b
 ```
+
+# Debug 
+ezgdb is the tool for this!
+1. **Launch GDB with `vmlinux`**:
+   ```bash
+   ezgdb
+   ```
+   Equivalent to:
+   ```bash
+   gdb <vmlinux>
+   ```
+
+2. **Connect to a Remote Target**:
+   ```bash
+   ezgdb conn
+   ```
+   Equivalent to:
+   ```bash
+   gdb <vmlinux> -ex "target remote :<gdbport>"
+   ```
+
+
+3. **Custom GDB Commands**:
+   ```bash
+   ezgdb --ex "break KASAN"
+   ```
+   Equivalent to:
+   ```bash
+   gdb <vmlinux> --ex "break main"
+   ```
