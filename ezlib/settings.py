@@ -74,7 +74,7 @@ LOCAL_SCHEMA = {
     "qemuport": {"required": True, "type": int},
     "sshport": {"required": True, "type": int},
     "kernelparam": {"required": True, "type": str},
-    "tmpfile": {"required": True, "type": str},
+    "outputfile": {"required": True, "type": str},
     "additionalcmd": {"required": True, "type": list, "list_type": str},
     "snapshot_file": {"required": False, "path_type": "file"}
 }

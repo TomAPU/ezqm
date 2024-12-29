@@ -90,7 +90,7 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
             "none",
         ]
     )
-    command.extend(["-chardev", f"stdio,id=char0,logfile={lconf['tmpfile']},signal=on"])
+    command.extend(["-chardev", f"stdio,id=char0,logfile={lconf['outputfile']},signal=on"])
     command.extend(
         [
             "-serial",

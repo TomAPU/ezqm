@@ -37,7 +37,7 @@ After executing, you will find a `ezqmlocal.json` file under your folder with co
     "gdbport": 11451,
     "qemuport": 19198,
     "sshport": 8964,
-    "tmpfile": "/tmp/bQZv746sBv",
+    "outputfile": "/tmp/bQZv746sBv",
     "kernelparam": "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1",
     "additionalcmd": []
 }
