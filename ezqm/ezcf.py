@@ -38,7 +38,7 @@ def initialize_local_settings(linux_src_folder: str):
     config["sshport"] = rand_port()
     config["outputfile"] = rand_tmp_file()
     config["kernelparam"] = (
-        "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1"
+        "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1 net.ifnames=0 biosdevname=0"
     )
     config["additionalcmd"] = []
     try:

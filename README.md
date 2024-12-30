@@ -38,7 +38,7 @@ After executing, you will find a `ezqmlocal.json` file under your folder with co
     "qemuport": 19198,
     "sshport": 8964,
     "outputfile": "/tmp/bQZv746sBv",
-    "kernelparam": "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1",
+    "kernelparam": "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1 net.ifnames=0 biosdevname=0",
     "additionalcmd": []
 }
 ```
