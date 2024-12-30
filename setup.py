@@ -26,7 +26,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_packages(include=["ezqm","ezqm.ezlib"]),
-    install_requires=[line.strip() for line in open("requirements.txt")],
+    install_requires=["pexpect"],
     entry_points={
         'console_scripts': [
             'ezcf=ezqm.ezcf:main',
