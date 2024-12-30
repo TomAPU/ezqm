@@ -10,15 +10,10 @@ def check_dependencies():
         if not shutil.which(tool):
             missing.append(tool)
     if missing:
-        raise RuntimeError(f"Missing required tools: {', '.join(missing)}. Please install them and try again.")
+        print(f"Missing required tools: {', '.join(missing)}. Please remember to install them before using ezqm.")
 
 # Run the dependency check
-try:
-    check_dependencies()
-except RuntimeError as e:
-    print(str(e))
-    exit(1)
-
+check_dependencies()
 
 # Read the README file for the long description
 with open("README.md", "r", encoding="utf-8") as fh:
