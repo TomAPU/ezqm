@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 import argparse
 import sys
-from ezlib.settings import (
-    read_local_settings,
-    check_local_settings,
-    check_global_settings,
-)
+from ezlib.settings import read_local_settings
 from ezlib.utils import exec_command, confguard
 from ezlib.printing import print_status
 

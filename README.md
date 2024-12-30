@@ -47,7 +47,7 @@ Then, when you switch to that directory and execute EZQM related command, the co
 ```bash
 ezcf -l -u key val
 ```
-# Start QEMU 
+# Start QEMU with `ezqm` 
 After setting up, simply use the following command to launch the QEMU
 ```bash
 ezqm
@@ -72,7 +72,7 @@ Create snapshot and set booting parameter with the following command (Currently,
 ezqm -b
 ```
 
-# Debug 
+# Debug the kernel with the GDB wrapper `ezgdb`
 ezgdb is the tool for this!
 1. **Launch GDB with `vmlinux`**:
    ```bash
@@ -101,3 +101,34 @@ ezgdb is the tool for this!
    ```bash
    gdb <vmlinux> --ex "break main"
    ```
+
+# File transfering with `ezcp`
+
+The `ezcp` tool allows you to transfer files or folders between the host machine and a virtual machine (VM). You can also transfer files in reverse, from the VM to the host.
+
+
+### Transfer from Host to VM
+To copy a file or folder from the host machine to the VM, use the following command:
+
+```bash
+ezcp <source> <destination>
+```
+
+- `<source>`: Path to the file or folder on the host.
+- `<destination>`: Path where the file or folder should be placed on the VM.
+
+#### Example
+```bash
+ezcp /path/to/file.txt /path/on/vm
+```
+
+### Transfer from VM to Host
+To copy a file or folder from the VM to the host machine, use the `--reverse` or `-r` option:
+
+```bash
+ezcp --reverse <source> <destination>
+```
+
+- `<source>`: Path to the file or folder on the VM.
+- `<destination>`: Path where the file or folder should be placed on the host.
+
