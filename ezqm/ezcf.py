@@ -2,14 +2,14 @@
 import os
 import json
 import argparse
-from ezlib.printing import print_succ, print_fail, print_status
-from ezlib.settings import (
+from .ezlib.printing import print_succ, print_fail, print_status
+from .ezlib.settings import (
     read_config,
     write_config,
     get_global_settings_path,
     get_local_settings_path,
 )
-from ezlib.utils import is_folder, rand_port, rand_tmp_file
+from .ezlib.utils import is_folder, rand_port, rand_tmp_file
 
 
 def initialize_local_settings(linux_src_folder: str):

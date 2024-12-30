@@ -2,8 +2,8 @@
 import os
 import argparse
 import pexpect
-from ezlib.settings import read_global_settings, read_local_settings
-from ezlib.utils import exec_command, confguard
+from .ezlib.settings import read_global_settings, read_local_settings
+from .ezlib.utils import exec_command, confguard
 
 
 def main():

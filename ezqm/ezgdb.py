@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 import argparse
 import sys
-from ezlib.settings import read_local_settings
-from ezlib.utils import exec_command, confguard
-from ezlib.printing import print_status
+from .ezlib.settings import read_local_settings
+from .ezlib.utils import exec_command, confguard
+from .ezlib.printing import print_status
 
 class GdbArgumentParser(argparse.ArgumentParser):
     def print_help(self):

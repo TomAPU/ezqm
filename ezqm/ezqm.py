@@ -2,14 +2,14 @@
 import os
 import argparse
 import pexpect
-from ezlib.settings import (
+from .ezlib.settings import (
     read_global_settings,
     write_local_settings,
     read_local_settings,
     validate_settings,
 )
-from ezlib.printing import print_status, print_fail
-from ezlib.utils import (
+from .ezlib.printing import print_status, print_fail
+from .ezlib.utils import (
     exec_command,
     generate_qemu_command,
     start_qemu_and_login,
