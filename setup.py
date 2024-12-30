@@ -30,7 +30,7 @@ setup(
     version="1.0.0",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=find_packages(include=["ezqm", "ezqm.ezlib"]),
+    packages=find_packages(include=["ezqm","ezqm.ezlib"]),
     install_requires=[line.strip() for line in open("requirements.txt")],
     entry_points={
         'console_scripts': [
