@@ -10,10 +10,13 @@ LOCAL_SETTINGS_FILE = "ezqmlocal.json"
 
 
 def get_global_settings_path():
-    """Get the path of the global settings file."""
-    return os.path.join(
-        os.path.dirname(os.path.abspath(sys.argv[0])), GLOBAL_SETTINGS_FILE
-    )
+    """
+    Get the path of the global settings file in the user's ~/.config directory.
+    Ensure the directory exists.
+    """
+    config_dir = os.path.join(os.path.expanduser("~"), ".config")
+    os.makedirs(config_dir, exist_ok=True)  # Create directory if it doesn't exist
+    return os.path.join(config_dir, GLOBAL_SETTINGS_FILE)
 
 
 def get_local_settings_path():
