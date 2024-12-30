@@ -21,7 +21,7 @@ from ezlib.utils import (
 
 
 
-def main(gconf: dict, lconf: dict):
+def main():
     parser = argparse.ArgumentParser(description="ezqm - Simplified QEMU launching.")
 
     parser.add_argument(
@@ -33,6 +33,9 @@ def main(gconf: dict, lconf: dict):
 
     args = parser.parse_args()
     confguard(parser)
+    
+    gconf = read_global_settings()
+    lconf = read_local_settings()
 
     if args.build_memory_snapshot:
         # Read snapshotfolder from global settings
@@ -80,6 +83,4 @@ def main(gconf: dict, lconf: dict):
 
 
 if __name__ == "__main__":
-    gconf = read_global_settings()
-    lconf = read_local_settings()
-    main(gconf, lconf)
+    main()
