@@ -1,6 +1,9 @@
 # EZQM
 
-Making QEMU Environment easier to be setup & run.
+Making it easier for using QEMU to debug Linux kernel.
+
+- [中文文档](README_CN.md)
+- [English](README.md)
 
 # Setting up 
 ## Prerequisites
@@ -132,7 +135,7 @@ Create snapshot and set booting parameter with the following command (Currently,
 ```bash
 ezqm -b
 ```
-With `-b` option, the `ezqm` will automatically launch the QEMU, log into the virtual machine, take snapshot and set into the `snapshotfolder`, change the local configuration file. 
+With `-b` option, the `ezqm` will automatically launch the QEMU, log into the virtual machine, take snapshot and save into the `snapshotfolder`, change the local configuration file. 
 So that next time you simply invoke `ezqm` and enjoy the QEMU with memory snapshot  
 
 
@@ -148,7 +151,7 @@ ezgdb is the tool for debugging the kernel, it basically translates the command 
    gdb <vmlinux>
    ```
 
-2. **Connect to a Remote Target**:
+2. **Connect to the virtual machine**:
    ```bash
    ezgdb conn
    ```
