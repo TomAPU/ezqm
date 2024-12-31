@@ -7,7 +7,8 @@ from typing import List
 import shlex
 import socket
 from argparse import ArgumentParser
-from .settings import check_global_settings,check_local_settings
+from .settings import check_global_settings, check_local_settings
+
 
 def random_num(low: int, high: int) -> int:
     """
@@ -58,20 +59,22 @@ def rand_tmp_file() -> str:
 def check_dependencies():
     """Check if QEMU and GDB are installed."""
     missing = []
-    for tool in ['qemu-system-x86_64', 'gdb','scp']:
+    for tool in ["qemu-system-x86_64", "gdb", "scp"]:
         if not shutil.which(tool):
             missing.append(tool)
     if missing:
-        print_fail(f"Missing required tools: {', '.join(missing)}. Please remember to install them before using ezqm.")
+        print_fail(
+            f"Missing required tools: {', '.join(missing)}. Please remember to install them before using ezqm."
+        )
         raise
 
 
-def valid_or_exit(parser:ArgumentParser) -> None:
-    '''
-    Check if the global and local settings are valid. 
+def valid_or_exit(parser: ArgumentParser) -> None:
+    """
+    Check if the global and local settings are valid.
     Check if the dependencies are installed.
     If not, print the help message and exit.
-    '''
+    """
     try:
         check_dependencies()
         check_global_settings()
@@ -79,6 +82,7 @@ def valid_or_exit(parser:ArgumentParser) -> None:
     except Exception as e:
         parser.print_help()
         exit(1)
+
 
 def exec_command(command: List[str]) -> None:
     """
@@ -116,7 +120,9 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
             "none",
         ]
     )
-    command.extend(["-chardev", f"stdio,id=char0,logfile={lconf['outputfile']},signal=on"])
+    command.extend(
+        ["-chardev", f"stdio,id=char0,logfile={lconf['outputfile']},signal=on"]
+    )
     command.extend(
         [
             "-serial",
@@ -140,8 +146,8 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
         ]
     )
     if "snapshot_file" in lconf:
-        snapshot_file=lconf["snapshot_file"]
-        command.extend(["-incoming",  f'exec: cat {snapshot_file}'])
+        snapshot_file = lconf["snapshot_file"]
+        command.extend(["-incoming", f"exec: cat {snapshot_file}"])
     command.extend(["-drive", f"file={gconf['diskimage']}"])
     command.extend(["-kernel", lconf["bzImage"], "-append", lconf["kernelparam"]])
     command.extend(lconf["additionalcmd"])
