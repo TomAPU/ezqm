@@ -3,17 +3,7 @@ import subprocess
 import shutil
 from setuptools import setup, find_packages
 
-def check_dependencies():
-    """Check if QEMU and GDB are installed."""
-    missing = []
-    for tool in ['qemu-system-x86_64', 'gdb']:
-        if not shutil.which(tool):
-            missing.append(tool)
-    if missing:
-        print(f"Missing required tools: {', '.join(missing)}. Please remember to install them before using ezqm.")
 
-# Run the dependency check
-check_dependencies()
 
 # Read the README file for the long description
 with open("README.md", "r", encoding="utf-8") as fh:

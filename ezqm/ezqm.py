@@ -15,7 +15,7 @@ from .ezlib.utils import (
     start_qemu_and_login,
     execute_qemu_command,
     rand_string,
-    confguard
+    valid_or_exit
 )
 
 
@@ -32,7 +32,7 @@ def main():
     )
 
     args = parser.parse_args()
-    confguard(parser)
+    valid_or_exit(parser)
     
     gconf = read_global_settings()
     lconf = read_local_settings()

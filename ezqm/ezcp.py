@@ -3,7 +3,7 @@ import os
 import argparse
 import pexpect
 from .ezlib.settings import read_global_settings, read_local_settings
-from .ezlib.utils import exec_command, confguard
+from .ezlib.utils import exec_command, valid_or_exit
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
         "-r", "--reverse", action="store_true", help="Transfer from VM to host."
     )
     args = parser.parse_args()
-    confguard(parser)
+    valid_or_exit(parser)
     # Read global configuration
     gconf = read_global_settings()
     lconf = read_local_settings()

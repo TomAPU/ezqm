@@ -2,7 +2,7 @@
 import argparse
 import sys
 from .ezlib.settings import read_local_settings
-from .ezlib.utils import exec_command, confguard
+from .ezlib.utils import exec_command, valid_or_exit
 from .ezlib.printing import print_status
 import os
 
@@ -26,7 +26,7 @@ def main():
     )
     args, remaining_args = parser.parse_known_args()
 
-    confguard(parser)
+    valid_or_exit(parser)
     lconf = read_local_settings()
     command = ["gdb", lconf["vmlinux"], "-ex", "set filename-display absolute"]
     if args.subcommand == "conn":

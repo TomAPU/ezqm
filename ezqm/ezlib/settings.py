@@ -185,7 +185,7 @@ def check_local_settings() -> None:
         local_settings = read_local_settings()  # you already have this function
         validate_type(local_settings, dict, "local_settings")
         validate_settings(local_settings, LOCAL_SCHEMA, "local settings")
-        print_succ("Local settings look good.")
+        #print_succ("Local settings look good.")
     except Exception as exc:
         print_fail(f"Error in local settings: {exc}")
         raise
@@ -199,7 +199,7 @@ def check_global_settings() -> None:
         global_settings = read_global_settings()  # you already have this function
         validate_type(global_settings, dict, "global_settings")
         validate_settings(global_settings, GLOBAL_SCHEMA, "global settings")
-        print_succ("Global settings look good.")
+        #print_succ("Global settings look good.")
     except Exception as exc:
         print_fail(f"Error in global settings: {exc}")
         raise

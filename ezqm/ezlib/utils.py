@@ -55,8 +55,25 @@ def rand_tmp_file() -> str:
     return f"/tmp/{rand_string(10)}"
 
 
-def confguard(parser:ArgumentParser) -> None:
+def check_dependencies():
+    """Check if QEMU and GDB are installed."""
+    missing = []
+    for tool in ['qemu-system-x86_64', 'gdb','scp']:
+        if not shutil.which(tool):
+            missing.append(tool)
+    if missing:
+        print_fail(f"Missing required tools: {', '.join(missing)}. Please remember to install them before using ezqm.")
+        raise
+
+
+def valid_or_exit(parser:ArgumentParser) -> None:
+    '''
+    Check if the global and local settings are valid. 
+    Check if the dependencies are installed.
+    If not, print the help message and exit.
+    '''
     try:
+        check_dependencies()
         check_global_settings()
         check_local_settings()
     except Exception as e:
