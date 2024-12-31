@@ -31,7 +31,7 @@ def main():
     command = ["gdb", lconf["vmlinux"], "-ex", "set filename-display absolute"]
     if args.subcommand == "conn":
         command.extend(["-ex", f"target remote :{lconf['gdbport']}"])
-    else:
+    elif args.subcommand is not None:
         command.extend([args.subcommand])
     command.extend(remaining_args)
     print_status(f"Executing:", command)
