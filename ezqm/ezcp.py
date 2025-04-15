@@ -25,31 +25,31 @@ def main():
     # Read global configuration
     gconf = read_global_settings()
     lconf = read_local_settings()
-    
-    ssh_key=gconf["sshkey"]
-    port=lconf["sshport"]
+
+    ssh_key = gconf["sshkey"]
+    port = lconf["sshport"]
 
     scp_command = [
-            "scp",
-            "-P",
-            str(port),
-            "-F",
-            "/dev/null",
-            "-o",
-            "UserKnownHostsFile=/dev/null",
-            "-o",
-            "BatchMode=yes",
-            "-o",
-            "IdentitiesOnly=yes",
-            "-o",
-            "StrictHostKeyChecking=no",
-            "-o",
-            "ConnectTimeout=10",
-            "-i",
-            ssh_key,
-            "-r",
-            "-v"
-        ]
+        "scp",
+        "-P",
+        str(port),
+        "-F",
+        "/dev/null",
+        "-o",
+        "UserKnownHostsFile=/dev/null",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "IdentitiesOnly=yes",
+        "-o",
+        "StrictHostKeyChecking=no",
+        "-o",
+        "ConnectTimeout=10",
+        "-i",
+        ssh_key,
+        "-r",
+        "-v"
+    ]
     if args.reverse:
         # Transfer from VM to host
         remote_source = f"root@localhost:{args.source}"
@@ -63,6 +63,7 @@ def main():
 
     # Execute the SCP command
     exec_command(scp_command)
+
 
 if __name__ == "__main__":
     main()

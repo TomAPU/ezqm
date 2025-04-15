@@ -149,7 +149,8 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
         snapshot_file = lconf["snapshot_file"]
         command.extend(["-incoming", f"exec: cat {snapshot_file}"])
     command.extend(["-drive", f"file={gconf['diskimage']}"])
-    command.extend(["-kernel", lconf["bzImage"], "-append", lconf["kernelparam"]])
+    command.extend(["-kernel", lconf["bzImage"],
+                   "-append", lconf["kernelparam"]])
     command.extend(lconf["additionalcmd"])
     return command
 

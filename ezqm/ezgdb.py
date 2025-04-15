@@ -13,6 +13,7 @@ class GdbArgumentParser(argparse.ArgumentParser):
         print("=====Below is gdb's built-in help=====")
         exec_command(["gdb", "--help"])
 
+
 def main():
     # Parse arguments
     parser = GdbArgumentParser(

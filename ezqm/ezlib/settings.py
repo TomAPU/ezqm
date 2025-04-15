@@ -15,7 +15,8 @@ def get_global_settings_path():
     Ensure the directory exists.
     """
     config_dir = os.path.join(os.path.expanduser("~"), ".config")
-    os.makedirs(config_dir, exist_ok=True)  # Create directory if it doesn't exist
+    # Create directory if it doesn't exist
+    os.makedirs(config_dir, exist_ok=True)
     return os.path.join(config_dir, GLOBAL_SETTINGS_FILE)
 
 
@@ -117,7 +118,8 @@ def validate_path(path: str, path_type: str, key_name: str) -> None:
     if path_type == "file" and not os.path.isfile(path):
         raise ValueError(f"Key '{key_name}': File '{path}' does not exist.")
     elif path_type == "directory" and not os.path.isdir(path):
-        raise ValueError(f"Key '{key_name}': Directory '{path}' does not exist.")
+        raise ValueError(
+            f"Key '{key_name}': Directory '{path}' does not exist.")
 
 
 def validate_type(value: Any, expected_type: type, key_name: str) -> None:
@@ -185,7 +187,7 @@ def check_local_settings() -> None:
         local_settings = read_local_settings()  # you already have this function
         validate_type(local_settings, dict, "local_settings")
         validate_settings(local_settings, LOCAL_SCHEMA, "local settings")
-        #print_succ("Local settings look good.")
+        # print_succ("Local settings look good.")
     except Exception as exc:
         print_fail(f"Error in local settings: {exc}")
         raise
@@ -199,7 +201,7 @@ def check_global_settings() -> None:
         global_settings = read_global_settings()  # you already have this function
         validate_type(global_settings, dict, "global_settings")
         validate_settings(global_settings, GLOBAL_SCHEMA, "global settings")
-        #print_succ("Global settings look good.")
+        # print_succ("Global settings look good.")
     except Exception as exc:
         print_fail(f"Error in global settings: {exc}")
         raise

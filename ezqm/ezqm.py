@@ -19,10 +19,9 @@ from .ezlib.utils import (
 )
 
 
-
-
 def main():
-    parser = argparse.ArgumentParser(description="ezqm - Simplified QEMU launching.")
+    parser = argparse.ArgumentParser(
+        description="ezqm - Simplified QEMU launching.")
 
     parser.add_argument(
         "-b",
@@ -33,7 +32,7 @@ def main():
 
     args = parser.parse_args()
     valid_or_exit(parser)
-    
+
     gconf = read_global_settings()
     lconf = read_local_settings()
 
@@ -53,7 +52,8 @@ def main():
             )
             return
         if "snapshot_file" in lconf:
-            print_status("A memory snapshot already exists, deleting it and regenerating.")
+            print_status(
+                "A memory snapshot already exists, deleting it and regenerating.")
             os.remove(lconf["snapshot_file"])
             del lconf["snapshot_file"]
         qemu_cmd = generate_qemu_command(gconf, lconf)
@@ -67,7 +67,8 @@ def main():
         print_status("Return of qemu port:", ret)
         # Check if the snapshot file exists
         if os.path.exists(snapshot_file):
-            print_status(f"Memory snapshot built successfully at {snapshot_file}.")
+            print_status(
+                f"Memory snapshot built successfully at {snapshot_file}.")
             # Update the local settings
             lconf["snapshot_file"] = snapshot_file
             # Write the updated local settings
@@ -78,7 +79,7 @@ def main():
         p.close(force=True)
     else:
         qemu_cmd = generate_qemu_command(gconf, lconf)
-        print_status("Executing:",qemu_cmd)
+        print_status("Executing:", qemu_cmd)
         exec_command(qemu_cmd)
 
 
