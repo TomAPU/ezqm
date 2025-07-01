@@ -103,7 +103,10 @@ def exec_command(command: List[str]) -> None:
     os.execvp(command[0], command)
 
 
-def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
+def generate_qemu_command_default(gconf: dict, lconf: dict) -> List[str]:
+    """
+    Default way to generate a QEMU command for running a kernel with the given configuration.
+    """
     command = []
     command.extend(
         [
@@ -145,13 +148,37 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
             f"user,id=net0,restrict=on,hostfwd=tcp:127.0.0.1:{lconf['sshport']}-:22",
         ]
     )
-    if "snapshot_file" in lconf:
-        snapshot_file = lconf["snapshot_file"]
-        command.extend(["-incoming", f"exec: cat {snapshot_file}"])
     command.extend(["-drive", f"file={gconf['diskimage']}"])
     command.extend(["-kernel", lconf["bzImage"],
                    "-append", lconf["kernelparam"]])
     command.extend(lconf["additionalcmd"])
+    return command
+
+
+def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
+    """
+    Generate a QEMU command based on the global and local configurations.
+    If "qemucmd" is not specified in the local configuration, use the default command generation.
+    If "qemucmd" is specified, format it with the provided parameters.
+
+    Returns:
+        List[str]: A list of command-line arguments for QEMU.
+    """
+    if "qemucmd" not in lconf:
+        command = generate_qemu_command_default(gconf, lconf)
+    else:
+        command_str = lconf["qemucmd"].format(
+            gdbport=lconf["gdbport"],
+            qemuport=lconf["qemuport"],
+            sshport=lconf["sshport"],
+            outputfile=lconf["outputfile"],
+            diskimage=gconf["diskimage"],
+            bzImage=lconf["bzImage"],
+        )
+        command = shlex.split(command_str)
+    if "snapshot_file" in lconf:
+        snapshot_file = lconf["snapshot_file"]
+        command.extend(["-incoming", f"exec: cat {snapshot_file}"])
     return command
 
 

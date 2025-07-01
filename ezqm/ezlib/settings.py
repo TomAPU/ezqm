@@ -80,7 +80,8 @@ LOCAL_SCHEMA = {
     "kernelparam": {"required": True, "type": str},
     "outputfile": {"required": True, "type": str},
     "additionalcmd": {"required": True, "type": list, "list_type": str},
-    "snapshot_file": {"required": False, "path_type": "file"}
+    "snapshot_file": {"required": False, "path_type": "file"},
+    "customboot": {"required": False, "type": str}
 }
 
 GLOBAL_SCHEMA = {
