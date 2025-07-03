@@ -18,7 +18,7 @@ EZQM 使用 `setuptools` 进行安装配置，`setuptools` 不是官方内置库
 pip3 install setuptools
 ```
 
-EZQM 还需要系统中安装 `QEMU`（具体为 `qemu-system-x86_64`）、`gdb` 和 `scp`。如果这些工具未安装，可以询问 ChatGPT 或查阅 Stackoverflow 来完成安装。
+EZQM 还需要系统中安装 `QEMU`（具体为 `qemu-system-x86_64` 和 `qemu-system-aarch64` ， 尽管我还没完全搞定 ARM 的支持）、`gdb` 和 `scp`。如果这些工具未安装，可以询问 ChatGPT 或查阅 Stackoverflow 来完成安装。
 
 EZQM 通过 `kvm` 运行 `QEMU`，因此你需要确保当前用户对 `kvm` 模块有访问权限（也就是说，你的用户属于 `kvm` 用户组，或者以 root 身份运行）。
 

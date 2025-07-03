@@ -19,7 +19,7 @@ If you don't have it, run:
 pip3 install setuptools
 ```
 
-EZQM also requires you to have `QEMU` (to be specific `qemu-system-x86_64`) and `gdb` and `scp` installed. If you don't have them, go ask ChatGPT or Stackoverflow to install them. 
+EZQM also requires you to have `QEMU` (to be specific `qemu-system-x86_64` and `qemu-system-aarch64`, despite I haven't finished the full arm support yet) and `gdb` and `scp` installed. If you don't have them, go ask ChatGPT or Stackoverflow to install them. 
 
 EZQM runs `QEMU` by `kvm`, so you need to ensure your current user has access to the `kvm` module (i.e inside the `kvm` user group or being root)
 
