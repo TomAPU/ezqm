@@ -12,7 +12,7 @@ from .ezlib.settings import (
 from .ezlib.utils import is_folder, rand_port, rand_tmp_file
 
 
-def initialize_local_settings(linux_src_folder: str):
+def initialize_local_settings(linux_src_folder: str, arch: str):
     """
     Initialize local settings with the path to the Linux source code folder.
     We initialize:
@@ -32,7 +32,12 @@ def initialize_local_settings(linux_src_folder: str):
         return
     config["src"] = linux_src_folder
     config["vmlinux"] = os.path.join(linux_src_folder, "vmlinux")
-    config["bzImage"] = os.path.join(linux_src_folder, "arch/x86/boot/bzImage")
+    if arch == "amd64":
+        config["bzImage"] = os.path.join(
+            linux_src_folder, "arch/x86/boot/bzImage")
+    elif arch == "arm64":
+        config["bzImage"] = os.path.join(
+            linux_src_folder, "arch/arm64/boot/Image")
     config["gdbport"] = rand_port()
     config["qemuport"] = rand_port()
     config["sshport"] = rand_port()
@@ -41,6 +46,7 @@ def initialize_local_settings(linux_src_folder: str):
         "nokaslr console=ttyS0 root=/dev/sda rw kasan_multi_shot=1 printk.synchronous=1 net.ifnames=0 biosdevname=0"
     )
     config["additionalcmd"] = []
+    config["arch"] = arch
     try:
         write_config(get_local_settings_path(), config)
         print_succ(f"Initialized local settings successfully.")
@@ -76,6 +82,14 @@ def main():
         help="Initialize local settings with the path to the Linux source code folder.",
     )
 
+    # Arch specify --arch amd64/arm64
+    parser.add_argument(
+        "--arch",
+        choices=["amd64", "arm64"],
+        default="amd64",
+        help="Specify the architecture (default: amd64).",
+    )
+
     # Add update key-value pair arguments
     parser.add_argument(
         "-u",
@@ -101,7 +115,7 @@ def main():
 
     # Initialize local settings
     if args.init_local:
-        initialize_local_settings(args.init_local)
+        initialize_local_settings(args.init_local, args.arch)
         return
 
     # Ensure valid arguments

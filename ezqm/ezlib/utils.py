@@ -59,7 +59,7 @@ def rand_tmp_file() -> str:
 def check_dependencies():
     """Check if QEMU and GDB are installed."""
     missing = []
-    for tool in ["qemu-system-x86_64", "gdb", "scp"]:
+    for tool in ["qemu-system-x86_64", "qemu-system-aarch64", "gdb", "scp"]:
         if not shutil.which(tool):
             missing.append(tool)
     if missing:
@@ -103,6 +103,20 @@ def exec_command(command: List[str]) -> None:
     os.execvp(command[0], command)
 
 
+def qemu_binary(lconf: dict) -> str:
+    """
+    Determine the QEMU binary based on the architecture specified in the local configuration.
+    If the architecture is not specified, default to "amd64" (compatible with old configs of ezqm).
+    """
+    arch = lconf.get("arch", "amd64")
+    if arch == "amd64":
+        return "qemu-system-x86_64"
+    elif arch == "arm64":
+        return "qemu-system-aarch64"
+    else:
+        raise ValueError(f"Unsupported architecture: {arch}")
+
+
 def generate_qemu_command_default(gconf: dict, lconf: dict) -> List[str]:
     """
     Default way to generate a QEMU command for running a kernel with the given configuration.
@@ -110,7 +124,7 @@ def generate_qemu_command_default(gconf: dict, lconf: dict) -> List[str]:
     command = []
     command.extend(
         [
-            "qemu-system-x86_64",
+            qemu_binary(lconf),
             "-m",
             "2048",
             "-gdb",
@@ -168,6 +182,7 @@ def generate_qemu_command(gconf: dict, lconf: dict) -> List[str]:
         command = generate_qemu_command_default(gconf, lconf)
     else:
         command_str = lconf["qemucmd"].format(
+            qemu_binary=qemu_binary(lconf),
             gdbport=lconf["gdbport"],
             qemuport=lconf["qemuport"],
             sshport=lconf["sshport"],
