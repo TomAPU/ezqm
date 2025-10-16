@@ -138,7 +138,7 @@ def generate_qemu_command_default(gconf: dict, lconf: dict) -> List[str]:
         ]
     )
     command.extend(
-        ["-chardev", f"stdio,id=char0,logfile={lconf['outputfile']},signal=on"]
+        ["-chardev", f"stdio,id=char0,logfile={lconf['outputfile']},signal=off"]
     )
     command.extend(
         [
