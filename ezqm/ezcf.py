@@ -29,7 +29,7 @@ def initialize_local_settings(linux_src_folder: str, arch: str):
     config = dict()
     if not is_folder(linux_src_folder):
         print_fail(f"Folder '{linux_src_folder}' does not exist.")
-        return
+        exit(1)
     config["src"] = linux_src_folder
     config["vmlinux"] = os.path.join(linux_src_folder, "vmlinux")
     if arch == "amd64":
@@ -53,6 +53,7 @@ def initialize_local_settings(linux_src_folder: str, arch: str):
         print_succ(f"Initialized local settings successfully.")
     except Exception as e:
         print_fail(f"An error occurred: {e}")
+        exit(1)
 
 
 def main():
@@ -123,12 +124,12 @@ def main():
     if args.global_scope and args.local_scope:
         print_fail("You cannot specify both --global/-g and --local/-l.")
         parser.print_help()
-        return
+        exit(1)
 
     if not args.global_scope and not args.local_scope:
         print_fail("You must specify either --global/-g or --local/-l.")
         parser.print_help()
-        return
+        exit(1)
 
     # Determine file path
     config_path = (
@@ -141,7 +142,7 @@ def main():
             "You cannot perform both read and update operations in the same command."
         )
         parser.print_help()
-        return
+        exit(1)
 
     # Perform updates
     if args.update:
@@ -154,21 +155,24 @@ def main():
         except Exception as e:
             print_fail(f"An error occurred: {e}")
             parser.print_help()
+            exit(1)
 
     # Perform read
     elif args.read is not None:
         try:
             settings = read_config(config_path)  # Read current settings
             if args.read == "":
-                print_status(f"All settings:")
                 print(json.dumps(settings, indent=4))
             elif args.read in settings:
-                print_status(f"{args.read}: {settings[args.read]}")
+                print(settings[args.read])
             else:
                 print_fail(f"Key '{args.read}' not found in settings.")
+                exit(1)
         except Exception as e:
             print_fail(f"An error occurred: {e}")
             parser.print_help()
+            exit(1)
+
     else:
         print_fail("You must specify either --read or --update.")
         parser.print_help()

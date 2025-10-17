@@ -50,7 +50,7 @@ def main():
             print_status(
                 "Please use ezcf -g -u snapshotfolder <path/to/your/folder> to set the snapshot folder first."
             )
-            return
+            exit(1)
         if "snapshot_file" in lconf:
             print_status(
                 "A memory snapshot already exists, deleting it and regenerating.")
@@ -76,6 +76,7 @@ def main():
             print_status("Updated local settings with the memory snapshot.")
         else:
             print_fail(f"Memory snapshot failed to build at {snapshot_file}.")
+            exit(1)
         p.close(force=True)
     else:
         qemu_cmd = generate_qemu_command(gconf, lconf)
